@@ -64,7 +64,7 @@ class TagDetailView(LoginRequiredMixin, generic.DetailView):
     model = Tag
 
 
-class UserCreateView(LoginRequiredMixin, generic.CreateView):
+class UserCreateView(generic.CreateView):
     model = User
     form_class = UserCreateForm
     success_url = reverse_lazy("login")
