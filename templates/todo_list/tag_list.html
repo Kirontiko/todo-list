@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block content %}
+  <h1>
+    <strong>Tag List</strong>
+    <a href="{% url 'todo_list:tag-create' %}" class="btn btn-primary link-to-page">
+      Create
+    </a>
+  </h1>
+  {% if tag_list %}
+
+    {% for tag in tag_list %}
+      <div class="card-body bg-secondary">
+        <div class="card bg-light m-2" >
+          <ul class="list-group">
+            <li class="list-group-item">
+              {{ tag.name }}
+              <a href="{% url 'todo_list:tag-detail' pk=tag.id %}" class="link-to-page"> Detail</a>
+            </li>
+            <div class="card-footer border-0 bg-light p-2 d-flex justify-content-around">
+              <a
+                class="btn btn-link m-0 text-reset"
+                href="{% url 'todo_list:tag-update' pk=tag.id %}"
+                role="button"
+                data-ripple-color="primary"
+                >Update</a>
+              <a
+                class="btn btn-link m-0 text-reset"
+                href="{% url 'todo_list:tag-delete' pk=tag.id %}"
+                role="button"
+                data-ripple-color="primary"
+                >Delete</a>
+            </div>
+          </ul>
+        </div>
+      </div>
+      {% endfor %}
+
+  {% else %}
+    <div class="container py-5 h-100">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col-12 col-md-8 col-lg-6 col-xl-4">
+          <div class="card bg-dark text-white" style="border-radius: 1rem;">
+            <div class="card-body p-5 text-center">
+
+              <div class="mb-md-2 mt-md-4 pb-4">
+                <h4>Tags are not found</h4>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  {% endif %}
+{% endblock %}

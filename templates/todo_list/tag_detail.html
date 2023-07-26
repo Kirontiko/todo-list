@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1><strong>{{ tag.name }}</strong></h1>
+  <h2>Related Tasks to this tag</h2>
+  {% if tag.tasks.all %}
+    <div class="card bg-secondary">
+      {% for task in tag.tasks.all %}
+          <div class="card bg-light m-5" >
+            <ul class="list-group">
+              <li class="list-group-item">
+                <strong>{{ task.content }}</strong>
+              </li>
+                <div
+                    class="card-footer border-0 bg-light p-2 d-flex justify-content-around"
+                >
+                    <a
+                      class="btn btn-link m-0 text-reset"
+                      href="{% url 'todo_list:task-update' pk=task.id %}"
+                      role="button"
+                      data-ripple-color="primary"
+                      >Update</a>
+                    <a
+                      class="btn btn-link m-0 text-reset"
+                      href="{% url 'todo_list:task-delete' pk=task.id %}"
+                      role="button"
+                      data-ripple-color="primary"
+                      >Delete</a>
+                </div>
+            </ul>
+          </div>
+    {% endfor %}
+  </div>
+  {% else %}
+    <div class="container py-5 h-100">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col-12 col-md-8 col-lg-6 col-xl-4">
+          <div class="card bg-dark text-white" style="border-radius: 1rem;">
+            <div class="card-body p-5 text-center">
+
+              <div class="mb-md-2 mt-md-4 pb-4">
+                <h4>Tasks are not found</h4>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  {% endif %}
+{% endblock %}

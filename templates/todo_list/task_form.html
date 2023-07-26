@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% load crispy_forms_filters %}
+
+{% block content %}
+  <div class="container py-4 h-100" id="blockContent" style="margin-left: -50px">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+          <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+            <div class="card bg-dark text-white" style="border-radius: 1rem;">
+              <div class="card-body p-5 text-center">
+
+                <div class="mb-md-5 mt-md-4 pb-5">
+                  <h1> {{ object|yesno:"Update, Create" }} Task</h1>
+                  <form action="" method="post" novalidate>
+                    {% csrf_token %}
+
+                    <div class="form-outline form-white mb-4">
+                      <label class="form-label" for="typeNameX">Content*</label>
+                      <textarea name="{{ form.content.name }}" cols="40" rows="10" class="textarea form-control" id="typeNameX" style="height: 188px;"></textarea>
+                    </div>
+                    <div class="form-outline form-white mb-4">
+                      <label class="form-label" for="typeDeadlineX">Deadline*</label>
+                      <input type="date" id=typeDeadlineX class="form-control form-control-lg dateinput" placeholder="Select a date" name="{{ form.deadline.name }}">
+                    </div>
+                    <div class="form-outline form-white mb-4">
+                      <label class="form-label" for="typeIsCompletedX">Is Completed</label>
+                      <input type="checkbox" name={{ form.is_completed.name }} id="typeIsCompletedX">
+                    </div>
+                    <div class="form-outline form-white mb-4">
+                        {{ form.tags|as_crispy_field }}
+                    </div>
+                    <div class="form-outline form-white mb-4">
+                    </div>
+                    <div class="form-outline form-white mb-4">
+                      <input type="hidden" name={{ form.user.name }} value="{{ user.id }}" />
+                    </div>
+
+                    <input type="submit" value="Submit" class="btn btn-primary">
+                  </form>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+{% endblock %}

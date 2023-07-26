@@ -1,0 +1,10 @@
+body {
+    margin-top: 20px;
+
+    background: linear-gradient(to right, rgb(27, 56, 203), rgba(37, 117, 252, 1));
+}
+
+.link-to-page {
+    float: right;
+    margin: 0 0 0 0;
+}
