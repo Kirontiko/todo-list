@@ -29,5 +29,5 @@ class Task(models.Model):
         ordering = ["-is_completed", "-created_at"]
 
     def __str__(self) -> str:
-        return (f"{self.name} ({self.created_at}). "
+        return (f"{self.content} ({self.created_at}). "
                 f"Is_completed: {self.is_completed}")
