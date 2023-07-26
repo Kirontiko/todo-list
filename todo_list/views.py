@@ -2,8 +2,8 @@ from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views import generic
 
-from todo_list.forms import TaskCreateOrUpdateForm
-from todo_list.models import Task, Tag
+from todo_list.forms import TaskCreateOrUpdateForm, UserCreateForm
+from todo_list.models import Task, Tag, User
 
 
 class IndexView(generic.View):
@@ -58,5 +58,12 @@ class TagUpdateView(generic.UpdateView):
 class TagDeleteView(generic.DeleteView):
     model = Tag
     success_url = reverse_lazy("todo_list:tag-list")
+
+
+class UserCreateView(generic.CreateView):
+    model = User
+    form_class = UserCreateForm
+    success_url = reverse_lazy("login")
+
 
 

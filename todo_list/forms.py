@@ -1,9 +1,10 @@
 from datetime import datetime
 
 from django import forms
+from django.contrib.auth.forms import UserCreationForm
 from django.core.exceptions import ValidationError
 
-from todo_list.models import Tag, Task
+from todo_list.models import Tag, Task, User
 
 
 class BaseTaskDeadlineValidationForm(forms.ModelForm):
@@ -39,3 +40,15 @@ class TaskCreateOrUpdateForm(forms.ModelForm):
             ),
 
         }
+
+
+
+class UserCreateForm(UserCreationForm):
+    class Meta(UserCreationForm):
+        model = User
+        fields = UserCreationForm.Meta.fields + (
+            "first_name",
+            "last_name",
+            "email"
+        )
+

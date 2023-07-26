@@ -12,7 +12,16 @@ class Tag(models.Model):
 
 
 class User(AbstractUser):
-    pass
+    first_name = models.CharField(max_length=255,
+                                  default="John")
+    last_name = models.CharField(max_length=255,
+                                 default="Doe")
+    email = models.EmailField(
+        max_length=255,
+        null=True,
+        blank=True,
+        default="johndoe@example.com"
+    )
 
 
 class Task(models.Model):

@@ -5,7 +5,7 @@ from todo_list.views import (IndexView,
                              TaskCreateView,
                              TagCreateView,
                              TaskUpdateView,
-                             TaskDeleteView, TagDeleteView, TagUpdateView)
+                             TaskDeleteView, TagDeleteView, TagUpdateView, UserCreateView)
 
 
 urlpatterns = [
@@ -32,7 +32,10 @@ urlpatterns = [
          name="task-update"),
     path("<int:pk>/delete/",
          TaskDeleteView.as_view(),
-         name="task-delete")
+         name="task-delete"),
+    path("user_create/",
+         UserCreateView.as_view(),
+         name="user-create")
 ]
 
 app_name = "todo_list"
