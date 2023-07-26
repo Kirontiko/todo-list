@@ -35,7 +35,7 @@ class Task(models.Model):
                              on_delete=models.CASCADE)
 
     class Meta:
-        ordering = ["-is_completed", "-created_at"]
+        ordering = ["is_completed", "-created_at"]
 
     def __str__(self) -> str:
         return (f"{self.content} ({self.created_at}). "

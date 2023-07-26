@@ -1,4 +1,5 @@
-from django.shortcuts import render
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.views import generic
 
@@ -6,64 +7,77 @@ from todo_list.forms import TaskCreateOrUpdateForm, UserCreateForm
 from todo_list.models import Task, Tag, User
 
 
-class IndexView(generic.View):
+class IndexView(generic.ListView):
     model = Task
+    paginate_by = 3
+    template_name = "todo_list/index.html"
+    def get_queryset(self):
+        self.queryset = Task.objects.filter(user__id=self.request.user.id)
 
-    def get(self, request):
-        context = {
-            "task_list": Task.objects.all().prefetch_related(
-                "tags"
-            ).select_related("user")
-        }
-
-        return render(request,
-                      "todo_list/index.html",
-                      context=context)
+        return self.queryset
 
 
-class TagListView(generic.ListView):
+class TagListView(LoginRequiredMixin, generic.ListView):
     model = Tag
     paginate_by = 5
 
 
-class TaskCreateView(generic.CreateView):
+class TagDetailView(LoginRequiredMixin, generic.DetailView):
+    model = Tag
+
+
+class TaskCreateView(LoginRequiredMixin, generic.CreateView):
     model = Task
     form_class = TaskCreateOrUpdateForm
     success_url = reverse_lazy("todo_list:index")
 
 
-class TaskUpdateView(generic.UpdateView):
+class TaskUpdateView(LoginRequiredMixin, generic.UpdateView):
     model = Task
     form_class = TaskCreateOrUpdateForm
     success_url = reverse_lazy("todo_list:index")
 
 
-class TaskDeleteView(generic.DeleteView):
+class TaskDeleteView(LoginRequiredMixin, generic.DeleteView):
     model = Task
     success_url = reverse_lazy("todo_list:index")
 
 
-class TagCreateView(generic.CreateView):
+class TagCreateView(LoginRequiredMixin, generic.CreateView):
     model = Tag
     fields = "__all__"
     success_url = reverse_lazy("todo_list:tag-list")
 
 
-class TagUpdateView(generic.UpdateView):
+class TagUpdateView(LoginRequiredMixin, generic.UpdateView):
     model = Tag
     fields = "__all__"
     success_url = reverse_lazy("todo_list:tag-list")
 
 
-class TagDeleteView(generic.DeleteView):
+class TagDeleteView(LoginRequiredMixin, generic.DeleteView):
     model = Tag
     success_url = reverse_lazy("todo_list:tag-list")
 
 
-class UserCreateView(generic.CreateView):
+class TagDetailView(LoginRequiredMixin, generic.DetailView):
+    model = Tag
+
+
+class UserCreateView(LoginRequiredMixin, generic.CreateView):
     model = User
     form_class = UserCreateForm
     success_url = reverse_lazy("login")
+
+
+class TaskUpdateCompleteStateView(LoginRequiredMixin, generic.UpdateView):
+    def post(self, request, *args, **kwargs) -> redirect:
+        task = get_object_or_404(Task, pk=kwargs["pk"])
+
+        task.is_completed = not task.is_completed
+        task.save()
+
+        return redirect("todo_list:index")
 
 
 

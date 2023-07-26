@@ -4,8 +4,8 @@
     <li class="list-group-item"><a href="{% url 'logout'%}?next={{request.path}}">Logout</a></li>
   {% else %}
     <li class="list-group-item">
-      <a href="{% url 'login'%}?next={{request.path}}">Login</a>
-      <a href="{% url 'todo_list:user-create'%}?next={% url 'todo_list:index' %}">Register</a>
+      <a href="{% url 'login'%}?next={{request.path}}" class="btn-dark p-2">Login</a>
+      <a href="{% url 'todo_list:user-create'%}?next={% url 'todo_list:index' %}" class="btn-dark p-2">Register</a>
     </li>
   {% endif %}
 
