@@ -1,8 +1,14 @@
+from django.conf import settings
+from django.contrib.auth.models import AbstractUser
 from django.db import models
 
 
 class Tag(models.Model):
     name = models.CharField(max_length=255)
+
+
+class User(AbstractUser):
+    pass
 
 
 class Task(models.Model):
@@ -11,6 +17,6 @@ class Task(models.Model):
     deadline = models.DateTimeField(blank=True, null=True)
     is_completed = models.BooleanField()
     tags = models.ManyToManyField(Tag, related_name="tasks")
-
-
-
+    user = models.ForeignKey(settings.AUTH_USER_MODEL,
+                             related_name="tasks",
+                             on_delete=models.CASCADE)
